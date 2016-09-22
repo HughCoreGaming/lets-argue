@@ -68,7 +68,7 @@
 
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-  <script>
+<!--  <script>
     !function (A, n, g, u, l, a, r) {
       A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
           (A[l].q = A[l].q || []).push(arguments)
@@ -78,7 +78,7 @@
 
     ga('create', 'UA-XXXXX-X');
     ga('send', 'pageview');
-  </script>
+  </script>-->
 
   <!-- build:js(.) scripts/vendor.js -->
   <!-- bower:js -->
@@ -99,12 +99,14 @@
   <!-- endbuild -->
 
   <script>
-    var config = {
-      apiKey: 'AIzaSyAIUBUGsKIF2RtaihtxELF22qP1IJGFbWw',
-      authDomain: 'lets-argue-87bb9.firebaseapp.com',
-      databaseURL: 'https://lets-argue.firebaseio.com',
-      storageBucket: 'lets-argue-87bb9.appspot.com'
-    };
+     // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAIUBUGsKIF2RtaihtxELF22qP1IJGFbWw",
+    authDomain: "lets-argue-87bb9.firebaseapp.com",
+    databaseURL: "https://lets-argue-87bb9.firebaseio.com",
+    storageBucket: "lets-argue-87bb9.appspot.com",
+    messagingSenderId: "958720299054"
+  };
 
     firebase.initializeApp(config);
     var rootRef = firebase.database().ref();

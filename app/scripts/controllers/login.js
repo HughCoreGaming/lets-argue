@@ -13,34 +13,39 @@ angular.module('letsArgueApp')
     $scope.logoutBtn = true;
 
     auth.$onAuthStateChanged(function (authData) {
+        
       if (authData) {
-        console.log(" logged: " + authData.uid);
         $scope.logoutBtn = true;
         $scope.loginBtn = false;
         $location.path('/account');
       }
     });
 
-    
 
-    
 
       // Autenthication with password and email
       $scope.passwordLogin = function (email, pass) {
+          
+        $scope.err = null;
+        $scope.msg = null;
 
         auth.$signInWithEmailAndPassword(email, pass)
           .then(function (authData) {
+              console.log("Auth Data: "+JSON.stringify(authData));
             redirect();
-            console.log("logged");
+            showSuccess("logged in");
           })
           .catch(function (error) {
-            showError(error);
-            console.log("error: " + error);
+            showError(error.message);
           });
+          
+          auth.$signInWithEmailAndPassword
       };
 
       $scope.createAccount = function (email, pass, confirm) {
+          
         $scope.err = null;
+        $scope.msg = null;
 
         if (!pass) {
           $scope.err = 'Please enter a password';
@@ -49,16 +54,14 @@ angular.module('letsArgueApp')
         } else {
           auth.$createUserWithEmailAndPassword(email, pass)
             .then(function (userData) {
-              console.log("User " + userData.uid + " created successfully");
               return userData;
             })
             .then(function (authData) {
-            console.log("Logged user: ", authData.uid);
               createProfile();
               redirect();
             })
             .catch(function (error) {
-              console.error("Error: ", error);
+              showError(error);
             });
           }
         };
@@ -101,6 +104,10 @@ angular.module('letsArgueApp')
 
     function showError(err) {
       $scope.err = err;
+    }
+    
+    function showSuccess(msg) {
+      $scope.msg = msg;
     }
 
 

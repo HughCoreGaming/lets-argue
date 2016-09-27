@@ -27,29 +27,34 @@ angular.module('letsArgueApp')
     
     $scope.changePassword = function(oldPass, newPass, confirm) {
       $scope.err = null;
+      $scope.msg = null;
 
       if( !oldPass || !newPass ) {
-        error('Please enter all fields');
+        showError('Please enter all fields');
 
       } else if( newPass !== confirm ) {
-        error('Passwords do not match');
+        showError('Passwords do not match');
 
       } else {
         // New Method
         auth.$updatePassword(newPass).then(function() {
-          console.log('Password changed');
+          showSuccess('Password changed');
         }, error);
 
       }
     };
 
     $scope.changeEmail = function (newEmail) {
+        
+        $scope.err = null;
+      $scope.msg = null;
+      
       auth.$updateEmail(newEmail)
         .then(function () {
-          console.log("email changed successfully");
+          showSuccess("email changed successfully");
         })
         .catch(function (error) {
-          console.log("Error: ", error);
+          showError(error.message);
         })
     };
 
@@ -64,6 +69,14 @@ angular.module('letsArgueApp')
     function success(msg) {
       alert(msg, 'success');
     }
+    
+    function showError(err) {
+      $scope.err = err;
+    }
+    
+    function showSuccess(msg) {
+      $scope.msg = msg;
+    }
 
     function alert(msg, type) {
       var obj = {text: msg+'', type: type};
@@ -74,15 +87,19 @@ angular.module('letsArgueApp')
     }
 
   $scope.updateProfile = function(name, imgUrl) {
+      
+      $scope.err = null;
+      $scope.msg = null;
+      
     firebase.auth().currentUser.updateProfile({
       displayName: name,
       photoURL: imgUrl
     })
       .then(function () {
-        console.log("updated");
+        showSuccess("updated");
       })
       .catch(function (error) {
-        console.log("error ", error);
+        showError(error.message);
       })
   };
 

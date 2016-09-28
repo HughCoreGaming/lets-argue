@@ -1,0 +1,33 @@
+<h2>My Arguments</h2>
+
+<div class="">
+  <p> Add new argument: </p>
+
+  <div class="row">
+    <form class="">
+      <div class="col-lg-4">
+        <div class="form-group">
+          <input type="text" ng-model="arg" class="form-control">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="form-group">
+          <input type="submit" ng-click="addArg(arg); arg = null" class="btn btn-primary" value="Send">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<p>List of My arguments: </p>
+
+
+  <div class="jumbotron" ng-repeat="arg in args"> {{ arg.text }}</div>
+  <p>Thumbs-down icon on a styled link button:
+        <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+        </a>
+      <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+        </a>
+      </p> 
+

@@ -31,7 +31,6 @@ angular.module('letsArgueApp')
 
         auth.$signInWithEmailAndPassword(email, pass)
           .then(function (authData) {
-              console.log("Auth Data: "+JSON.stringify(authData));
             redirect();
             showSuccess("logged in");
           })

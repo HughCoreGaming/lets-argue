@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 angular.module('letsArgueApp', [
+    'nvd3',
     'ngAnimate',
     'ngAria',
     'ngCookies',

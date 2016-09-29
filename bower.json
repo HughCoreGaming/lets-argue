@@ -13,21 +13,26 @@
     "angular-resource": "^1.3.0",
     "angular-route": "^1.3.0",
     "angular-sanitize": "^1.3.0",
-    "angular-touch": "^1.3.0"
+    "angular-touch": "^1.3.0",
+    "d3": "^4.2.6",
+    "angular-nvd3": "^1.0.9",
+    "nvd3": "^1.8.4"
   },
   "devDependencies": {
     "mockfirebase": "0.11.0",
-    "angular-mocks": "^1.3.0"
+    "angular-mocks": "^1.3.0",
+    "d3": "^3.5.17",
+    "angular-nvd3": "^1.0.9",
+    "nvd3": "^1.8.4"
   },
   "appPath": "app",
-  "moduleName": "letsArgueApp"
-  ,
+  "moduleName": "letsArgueApp",
   "overrides": {
     "bootstrap": {
       "main": [
-      "less/bootstrap.less",
-      "dist/css/bootstrap.css",
-      "dist/js/bootstrap.js"
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
       ]
     }
   }

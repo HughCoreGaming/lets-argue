@@ -20,6 +20,15 @@ angular.module('letsArgueApp')
         $scope.args = args;
       })
       .catch(alert);
+      
+    var query = rootRef.child('votes');
+    var votes = $firebaseArray(query);
+
+    votes.$loaded()
+      .then(function () {
+        $scope.votes = votes;
+      })
+      .catch(alert);
 
     $scope.logout = function () {
       auth.$signOut();

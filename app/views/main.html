@@ -17,14 +17,9 @@
     <div class="jumbotron"> {{ arg.text }}</div>
     <div class='marketing'>
         
-        <a ng-show-auth="" href="#" class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-thumbs-up"></span> Agree
-        </a>
-        <a ng-show-auth="" href="#" class="btn btn-info btn-lg">
-            <span class="glyphicon glyphicon-thumbs-down"></span> Disagree
-        </a>
+        <span>{{ arg.agreeVotes }}</span> Agree <span>{{ arg.disagreeVotes }}</span> Disagree
         
-        <p class='marketing'>Posted by: {{ arg.id }} </p>
+        <p class='marketing'>Posted by: {{ arg.user }} </p>
         
     </div>
 </div>

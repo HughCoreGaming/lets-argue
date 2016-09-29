@@ -5,12 +5,12 @@
 
   <div class="row">
     <form class="">
-      <div class="col-lg-4">
+      <div class="col-lg-12">
         <div class="form-group">
-          <input type="text" ng-model="arg" class="form-control">
+          <textarea  ng-model="arg" class="form-control" rows="5" id="arg"></textarea>
         </div>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-12">
         <div class="form-group">
           <input type="submit" ng-click="addArg(arg); arg = null" class="btn btn-primary" value="Send">
         </div>
@@ -20,14 +20,24 @@
 </div>
 <p>List of My arguments: </p>
 
-
-  <div class="jumbotron" ng-repeat="arg in args"> {{ arg.text }}</div>
-  <p>Thumbs-down icon on a styled link button:
-        <a href="#" class="btn btn-info btn-lg">
-          <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
-        </a>
-      <a href="#" class="btn btn-info btn-lg">
-          <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
-        </a>
-      </p> 
-
+<div ng-repeat="arg in args"> 
+    <div class="jumbotron"> {{ arg.text }}</div>
+    <div class='marketing'>
+        
+        <span>{{ arg.agreeVotes }}</span> Agree <span>{{ arg.disagreeVotes }}</span> Disagree
+        
+        <button class="btn btn-info btn-lg pull-right" ng-model="collapsed" ng-click="updateChartScope(arg.agreeVotes,arg.disagreeVotes);collapsed=!collapsed">Toggle Stats</button>
+        <div ng-show="collapsed">
+            <div width="100%" class='marketing'>
+                <p class='marketing'>Please rotate device or resize browser to animate chart</P>
+                <p class='marketing'>Close toggle for after finish</P>
+                <nvd3 options="options" data="chartData"></nvd3>
+            </div>
+        </div>
+        
+        <p class='marketing'>Posted by: {{ arg.user }} </p>
+        
+    </div>
+</div>
+  
+ 

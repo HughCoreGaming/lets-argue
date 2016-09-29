@@ -1,0 +1,29 @@
+ <h1>Welcome to Lets Argue!</h1>
+
+<div class="row marketing">
+  <h4>Lets fight it out</h4>
+  <p>
+    Ever wondered if your right but can't decide, not sure if friends opinions are right, this is the app that will get to the bottom of your argument.
+  </p>
+</div>
+  
+  <h4>Arguments</h4>
+  <p>
+    Please login to vote!
+  </p>
+  
+<div ng-repeat="arg in args"> 
+    <div class="jumbotron"> {{ arg.text }}</div>
+    <div class='marketing'>
+        
+        <button ng-click="addVote(arg, $event)" id="agree" ng-show-auth="" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-thumbs-up"></span> Agree
+        </button>
+        <button ng-click="addVote(arg, $event)" id="agree" ng-show-auth="" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-thumbs-down"></span> Disagree
+        </button>
+        
+        <p class='marketing'>Posted by: {{ arg.user }} </p>
+        
+    </div>
+</div>

@@ -101,6 +101,16 @@ angular.module('letsArgueApp')
           }]
         }
       })
+      .when('/votes', {
+        templateUrl: 'views/votes.html',
+        controller: 'Votes',
+        resolve: {
+          "currentAuth": ["auth", function (auth) {
+            // returns a promisse so the resolve waits for it to complete
+            return auth.$requireSignIn();
+          }]
+        }
+      })
       .when('/myargs', {
         templateUrl: 'views/myargs.html',
         controller: 'Myargs',

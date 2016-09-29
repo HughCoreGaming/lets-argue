@@ -45,6 +45,8 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 .jumbotron .btn {
   font-size: 21px;
@@ -58,6 +60,7 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

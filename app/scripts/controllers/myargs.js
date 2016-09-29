@@ -20,14 +20,16 @@ angular.module('letsArgueApp')
       })
       .catch(alert);
 
-    // provide a method for adding a args
+     // provide a method for adding a args
     $scope.addArg = function (newArg) {
       if (newArg) {
         // push args to the end of the array
         $scope.args.$add({
           text: newArg,
           user: currentAuth.displayName,
-          userId: currentAuth.uid
+          userId: currentAuth.uid,
+          agreeVotes: 0,
+          disagreeVotes: 0
         })
           .catch(alert);
       }

@@ -41,6 +41,11 @@ angular.module('letsArgueApp')
                 y: 0
             }
         ];
+        
+        $scope.myargs = null;
+        
+        
+        $scope.args = null;
 
     // synchronize a read-only, synchronized array of args, limit to most recent 10
     var query = rootRef.child('args').limitToLast(10);

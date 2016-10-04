@@ -21,11 +21,11 @@
         
         <button class="btn btn-info btn-lg pull-right" ng-model="collapsed" ng-click="updateChartScope(arg.agreeVotes,arg.disagreeVotes);collapsed=!collapsed">Toggle Stats</button>
         <div ng-show="collapsed">
-            <div width="100%" class='marketing'>
+
                 <p class='marketing'>Please rotate device or resize browser to animate chart</P>
                 <p class='marketing'>Close toggle for after finish</P>
-                <nvd3 options="options" data="chartData"></nvd3>
-            </div>
+                <nvd3 options="options" data="chartData[$index]"></nvd3>
+     
             
         </div>
         

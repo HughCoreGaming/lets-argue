@@ -28,61 +28,41 @@ $scope.options = {
         y: function(d){ return d.value; },
         showValues: true,
         valueFormat: function(d){
-            return d3.format(',.4f')(d);
+            return d3.format('4f')(d);
         },
         transitionDuration: 500,
         xAxis: {
-            axisLabel: 'X Axis'
+            axisLabel: 'Votes'
         },
         yAxis: {
-            axisLabel: 'Y Axis',
+            axisLabel: 'Count',
             axisLabelDistance: 30
         }
     }
 };
 
-$scope.chartData = [{
-    key: "Votes",
-    values: [
-        { "label" : "Agree" , "value" : 0 },
-        { "label" : "Disagree" , "value" : 0 },
-        ]
-    }]
+
 
   
-
-    // synchronize a read-only, synchronized array of args, limit to most recent 10
-    var query = rootRef.child('args');
-    var args = $firebaseArray(query);
+    var argsRef = firebase.database().ref("args");
+    var votesRef = firebase.database().ref("votes");
     
-      args.$loaded()
-      .then(function () {
-        $scope.args = args;
-      }).catch(alert);
-      
-    var query = rootRef.child('votes');
-    var votes = $firebaseArray(query);
+    $scope.chartData = null;
+    setupCharts(argsRef);
+
+    var args = $firebaseArray(argsRef);
+    var votes = $firebaseArray(votesRef);
+ 
+    args.$loaded()
+    .then(function () {
+      $scope.args = args;
+    }).catch(alert);
 
     votes.$loaded()
       .then(function () {
         $scope.votes = votes;
       })
       .catch(alert);
-      
-    $scope.updateChartScope = function (argee, disagree) {
-        
-        $scope.chartData = [{
-                key: "Votes",
-                values: [
-                    {"label": "Agree", "value": argee},
-                    {"label": "Disagree", "value": disagree},
-                ]
-            }]
-
-        
-    };
-    
-
 
     $scope.logout = function () {
       auth.$signOut();
@@ -90,6 +70,34 @@ $scope.chartData = [{
       $location.path('/login');
       $scope.authData = null;
     };
+    
+    function setupCharts(argsRef) {
+        $scope.chartData = [];
+        argsRef.once("value")
+                .then(function (snapshot) {
+                    snapshot.forEach(function (item) {
+
+                        var itemVal = item.val();
+
+                        $scope.chartData.push([
+                            {
+                                key: "Cumulative Return",
+                                values: [
+                                    {
+                                        "label": "Agree",
+                                        "value": itemVal.agreeVotes
+                                    },
+                                    {
+                                        "label": "Disagree",
+                                        "value": itemVal.disagreeVotes
+                                    }
+                                ]
+                            }
+                        ]);
+                    });
+                });
+                
+    }
     
     function alert(msg) {
       $scope.err = msg;

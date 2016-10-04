@@ -31,16 +31,6 @@ angular.module('letsArgueApp')
             }
         };
 
-        $scope.chartData = [
-            {
-                key: "Agree",
-                y: 0
-            },
-            {
-                key: "Disagree",
-                y: 0
-            }
-        ];
         
         $scope.myargs = null;
         
@@ -48,17 +38,12 @@ angular.module('letsArgueApp')
         $scope.args = null;
 
     // synchronize a read-only, synchronized array of args, limit to most recent 10
-    var query = rootRef.child('args').limitToLast(10);
-    var args = $firebaseArray(query);
+    var argsRef = firebase.database().ref("args").orderByChild('userId').equalTo(currentAuth.uid);
+    
+    $scope.chartData = null;
+    setupCharts(argsRef);
 
-    args.$loaded().then(function () {
-        $scope.args = args;
-    })
-      .catch(alert);
-      
-    var query = rootRef.child('args').orderByChild('userId').equalTo(currentAuth.uid);
- 
-    var myargs = $firebaseArray(query);
+    var myargs = $firebaseArray(argsRef);
 
     myargs.$loaded().then(function () {
         $scope.myargs = myargs;
@@ -79,21 +64,30 @@ angular.module('letsArgueApp')
       }
     };
     
-    $scope.updateChartScope = function (argee, disagree) {
-        
-        $scope.chartData = [
-            {
-                key: "Agree",
-                y: argee
-            },
-            {
-                key: "Disagree",
-                y: disagree
-            }
-        ];
+    function setupCharts(argsRef) {
+        $scope.chartData = [];
+        argsRef.once("value")
+                .then(function (snapshot) {
+                    snapshot.forEach(function (item) {
 
-        
-    };
+                        var itemVal = item.val();
+
+                        $scope.chartData.push([
+                            {
+                                key: "Agree",
+                                y: itemVal.agreeVotes
+                            },
+                            {
+                                key: "Disagree",
+                                y: itemVal.disagreeVotes
+                            }
+                        ]);
+                    });
+                });
+                
+                console.log($scope.chartData);
+
+    }
 
     function alert(msg) {
       $scope.err = msg;

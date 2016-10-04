@@ -20,6 +20,9 @@ angular.module('letsArgueApp')
                 duration: 500,
                 labelThreshold: 0.01,
                 labelSunbeamLayout: true,
+                valueFormat: function(d){
+                    return d3.format('4f')(d);
+                },
                 legend: {
                     margin: {
                         top: 0,
@@ -84,8 +87,7 @@ angular.module('letsArgueApp')
                         ]);
                     });
                 });
-                
-                console.log($scope.chartData);
+
 
     }
 

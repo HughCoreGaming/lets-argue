@@ -56,7 +56,7 @@ angular.module('letsArgueApp')
     $scope.addArg = function (newArg) {
       if (newArg) {
         // push args to the end of the array
-        $scope.args.$add({
+        $scope.myargs.$add({
           text: newArg,
           user: currentAuth.displayName,
           userId: currentAuth.uid,

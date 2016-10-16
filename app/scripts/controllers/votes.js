@@ -9,6 +9,7 @@
 angular.module('letsArgueApp')
   .controller('Votes', ["$scope", "currentAuth", "$firebaseArray", "$timeout", function ($scope, currentAuth, $firebaseArray, $timeout) {
     $scope.user = currentAuth;
+    $scope.userHasVoted = false;
 
      // synchronize a read-only, synchronized array of args, limit to most recent 10
     var query = rootRef.child('args').limitToLast(10);
@@ -32,15 +33,15 @@ angular.module('letsArgueApp')
      // provide a method for adding a args
     $scope.addVote = function (o, event) {
         
-        var userHasVoted = false;
+        $scope.userHasVoted = false;
         
         angular.forEach($scope.votes, function(votes) {
             if(votes.argsId == o.$id && votes.userId == currentAuth.uid){
-                userHasVoted = true;
+                $scope.userHasVoted = true;
             }
         })
         
-        if(!userHasVoted){
+        if(!$scope.userHasVoted){
 
             // push args to the end of the array
             $scope.votes.$add({

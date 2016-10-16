@@ -63,13 +63,6 @@ $scope.options = {
         $scope.votes = votes;
       })
       .catch(alert);
-
-    $scope.logout = function () {
-      auth.$signOut();
-      console.log('logged out');
-      $location.path('/login');
-      $scope.authData = null;
-    };
     
     function setupCharts(argsRef) {
         $scope.chartData = [];

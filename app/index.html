@@ -23,7 +23,7 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="header" ng-cloak="">
+<div class="header" ng-controller="IndexCtrl" ng-cloak="">
   <div class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -114,6 +114,10 @@
 
     firebase.initializeApp(config);
     var rootRef = firebase.database().ref();
+    
+    function logout() {
+      auth.$signOut();
+    };
 
 
   </script>
@@ -131,6 +135,7 @@
         <script src="scripts\routes.js"></script>
         <script src="scripts/controllers/myargs.js"></script>
         <script src="scripts/controllers/votes.js"></script>
+        <script src="scripts/controllers/index.js"></script>
         <!-- endbuild -->
 </body>
 </html>

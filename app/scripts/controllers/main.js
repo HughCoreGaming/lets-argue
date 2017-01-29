@@ -13,53 +13,52 @@ angular.module('letsArgueApp')
 
 
         
-$scope.options = {
-    chart: {
-        type: 'discreteBarChart',
-        height: 450,
-        autoResize: true,
-        margin : {
-            top: 20,
-            right: 20,
-            bottom: 60,
-            left: 55
-        },
-        x: function(d){ return d.label; },
-        y: function(d){ return d.value; },
-        showValues: true,
-        valueFormat: function(d){
-            return d3.format('4f')(d);
-        },
-        transitionDuration: 500,
-        xAxis: {
-            axisLabel: 'Votes'
-        },
-        yAxis: {
-            axisLabel: 'Count',
-            axisLabelDistance: 30
+    $scope.options = {
+        chart: {
+            type: 'discreteBarChart',
+            height: 450,
+            autoResize: true,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 60,
+                left: 55
+            },
+            x: function(d){ return d.label; },
+            y: function(d){ return d.value; },
+            showValues: true,
+            valueFormat: function(d){
+                return d3.format('4f')(d);
+            },
+            transitionDuration: 500,
+            xAxis: {
+                axisLabel: 'Votes'
+            },
+            yAxis: {
+                axisLabel: 'Count',
+                axisLabelDistance: 30
+            }
         }
-    }
-};
-
+    };
+    
     $scope.argueShow = 5;
 
     var argsRef = firebase.database().ref("args").limitToFirst($scope.argueShow);
     var votesRef = firebase.database().ref("votes");
-    
-    $scope.chartData = null;
-    setupCharts(argsRef);
 
     var args = $firebaseArray(argsRef);
     var votes = $firebaseArray(votesRef);
- 
+
     args.$loaded()
     .then(function () {
+    $scope.chartData = null;
+    setupCharts(argsRef);
       $scope.args = args;
-      $scope.argsLength = $scope.args.length;
+      $scope.argsLength = args.length;
       
       $timeout(function () {
             $scope.collapsed=!$scope.collapsed;
-        }, 40);
+        }, 100);
       
     }).catch(alert);
 
@@ -70,33 +69,37 @@ $scope.options = {
       .catch(alert);
       
     $scope.argumentShow = function (action) {
-        var argueShow = $scope.argueShow;
-        var argsLength = $scope.argsLength;
-        if (action === "down" && argueShow <= argsLength) {
-            argueShow++;
-        } else if (action === "up" && argueShow > 1) {
-            argueShow--;
-        }
 
-        argsRef = firebase.database().ref("args").orderByKey().limitToFirst(argueShow);
-        args = $firebaseArray(argsRef);
-        args.$loaded()
-                .then(function () {
-                    $scope.args = args;
-                    $scope.argsLength = $scope.args.length;
-                    $scope.argueShow = argueShow;
-                    $scope.collapsed=!$scope.collapsed;
-                    setupCharts(argsRef);
-                    $timeout(function () {
-                        $scope.collapsed=!$scope.collapsed;
-                        $location.hash('scrollAnchor');
-                        $anchorScroll();
-                    }, 40);
-               
-                }).catch(alert);
+        $timeout(function () {
+            var argueShow = $scope.argueShow;
+            var argsLength = $scope.argsLength;
+            if (action === "down" && argueShow <= argsLength) {
+                argueShow++;
+            } else if (action === "up" && argueShow > 1) {
+                argueShow--;
+            }
+
+            argsRef = firebase.database().ref("args").orderByKey().limitToFirst(argueShow);
+            args = $firebaseArray(argsRef);
+            args.$loaded()
+                    .then(function () {
+                        $scope.args = args;
+                        $scope.argueShow = argueShow;
+                        $scope.argsLength = args.length;
+                        setupCharts(argsRef);
+                        $scope.collapsed = !$scope.collapsed;
+                        $timeout(function () {
+                            $scope.collapsed = !$scope.collapsed;
+                            $location.hash('scrollAnchor');
+                            $anchorScroll();
+                        }, 100);
+
+                    }).catch(alert);
+
+        }, 100);
     }
 
-    function setupCharts(argsRef) {
+    function setupCharts() {
         $scope.chartData = [];
         argsRef.once("value")
                 .then(function (snapshot) {

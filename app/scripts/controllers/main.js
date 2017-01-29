@@ -9,7 +9,7 @@
  */
 angular.module('letsArgueApp')
 
-   .controller('MainCtrl', ["auth", "$scope", "$location", "$firebaseArray", "$timeout", function (auth, $scope, $location, $firebaseArray, $timeout) {
+   .controller('MainCtrl', ["auth", "$scope", "$location", "$firebaseArray", "$timeout", "$anchorScroll", function (auth, $scope, $location, $firebaseArray, $timeout, $anchorScroll) {
 
 
         
@@ -41,10 +41,9 @@ $scope.options = {
     }
 };
 
+    $scope.argueShow = 5;
 
-
-  
-    var argsRef = firebase.database().ref("args");
+    var argsRef = firebase.database().ref("args").limitToFirst($scope.argueShow);
     var votesRef = firebase.database().ref("votes");
     
     $scope.chartData = null;
@@ -56,6 +55,7 @@ $scope.options = {
     args.$loaded()
     .then(function () {
       $scope.args = args;
+      $scope.argsLength = $scope.args.length;
     }).catch(alert);
 
     votes.$loaded()
@@ -63,6 +63,29 @@ $scope.options = {
         $scope.votes = votes;
       })
       .catch(alert);
+      
+    $scope.argumentShow = function (action) {
+        $scope.glued = true;
+        if (action == "down" && $scope.argueShow <= $scope.argsLength) {
+            $scope.argueShow++;
+        } else if (action == "up" && $scope.argueShow > 1) {
+            $scope.argueShow--;
+        }
+
+        argsRef = firebase.database().ref("args").limitToFirst($scope.argueShow);
+        args = $firebaseArray(argsRef);
+        args.$loaded()
+                .then(function () {
+                    $scope.args = args;
+                    $scope.argsLength = $scope.args.length;
+                    var ff = $scope.argueShow;
+                    $timeout(function () {
+                        $location.hash('scrollAnchor');
+                        $anchorScroll();
+                    }, 100);
+               
+                }).catch(alert);
+    }
     
     function setupCharts(argsRef) {
         $scope.chartData = [];

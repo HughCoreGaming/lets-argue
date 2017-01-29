@@ -1,5 +1,5 @@
 
- <h1>Welcome to Lets Argue!</h1>
+ <h1 id="bottom">Welcome to Lets Argue!</h1>
 
 <div class="row marketing">
   <h4>Lets fight it out</h4>
@@ -12,24 +12,33 @@
   <p>
     Please login to vote!
   </p>
-  
-<div ng-repeat="arg in args"> 
-    <div class="jumbotron"> {{ arg.text }}</div>
-    <div class='marketing'>
-        
-        <span>{{ arg.agreeVotes }}</span> Agree <span>{{ arg.disagreeVotes }}</span> Disagree
-        
-        <button class="btn btn-info btn-lg pull-right" ng-model="collapsed" ng-click="updateChartScope(arg.agreeVotes,arg.disagreeVotes);collapsed=!collapsed">Toggle Stats</button>
-        <div ng-show="collapsed">
 
-                <p class='marketing'>Please rotate device or resize browser to animate chart</P>
-                <p class='marketing'>Close toggle for after finish</P>
-                <nvd3 options="options" data="chartData[$index]"></nvd3>
-     
-            
-        </div>
-        
-        <p class='marketing'>Posted by: {{ arg.user }} </p>
-        
-    </div>
-</div>
+
+  <div ng-repeat="arg in args"> 
+      <div class="jumbotron"> {{ arg.text }}</div>
+      <div class='marketing'>
+
+          <span>{{ arg.agreeVotes }}</span> Agree <span>{{ arg.disagreeVotes }}</span> Disagree
+
+          <button class="btn btn-info btn-lg pull-right" ng-model="collapsed" ng-click="updateChartScope(arg.agreeVotes,arg.disagreeVotes);collapsed=!collapsed">Toggle Stats</button>
+          <div ng-show="collapsed">
+
+              <p class='marketing'>Please rotate device or resize browser to animate chart</P>
+              <p class='marketing'>Close toggle for after finish</P>
+              <nvd3 options="options" data="chartData[$index]"></nvd3>
+
+
+          </div>
+
+          <p class='marketing'>Posted by: {{ arg.user }} </p>
+
+      </div>
+  </div>
+
+  
+  <div class="paginationHolder">
+    <button class="btn btn-info btn-sm pull-right" ng-click="argumentShow('down')"><span class="glyphicon glyphicon-arrow-down"></span></button>
+    <span id="scrollAnchor" class='marketing'>Showing {{ argueShow }} arguments</span>
+    <button class="btn btn-info btn-sm pull-left" ng-click="argumentShow('up')"><span class="glyphicon glyphicon-arrow-up"></span></button>
+  </div>
+

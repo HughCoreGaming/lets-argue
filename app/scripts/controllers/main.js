@@ -56,6 +56,11 @@ $scope.options = {
     .then(function () {
       $scope.args = args;
       $scope.argsLength = $scope.args.length;
+      
+      $timeout(function () {
+            $scope.collapsed=!$scope.collapsed;
+        }, 40);
+      
     }).catch(alert);
 
     votes.$loaded()
@@ -65,28 +70,32 @@ $scope.options = {
       .catch(alert);
       
     $scope.argumentShow = function (action) {
-        $scope.glued = true;
-        if (action == "down" && $scope.argueShow <= $scope.argsLength) {
-            $scope.argueShow++;
-        } else if (action == "up" && $scope.argueShow > 1) {
-            $scope.argueShow--;
+        var argueShow = $scope.argueShow;
+        var argsLength = $scope.argsLength;
+        if (action === "down" && argueShow <= argsLength) {
+            argueShow++;
+        } else if (action === "up" && argueShow > 1) {
+            argueShow--;
         }
 
-        argsRef = firebase.database().ref("args").limitToFirst($scope.argueShow);
+        argsRef = firebase.database().ref("args").orderByKey().limitToFirst(argueShow);
         args = $firebaseArray(argsRef);
         args.$loaded()
                 .then(function () {
                     $scope.args = args;
                     $scope.argsLength = $scope.args.length;
-                    var ff = $scope.argueShow;
+                    $scope.argueShow = argueShow;
+                    $scope.collapsed=!$scope.collapsed;
+                    setupCharts(argsRef);
                     $timeout(function () {
+                        $scope.collapsed=!$scope.collapsed;
                         $location.hash('scrollAnchor');
                         $anchorScroll();
-                    }, 100);
+                    }, 40);
                
                 }).catch(alert);
     }
-    
+
     function setupCharts(argsRef) {
         $scope.chartData = [];
         argsRef.once("value")
@@ -111,8 +120,7 @@ $scope.options = {
                             }
                         ]);
                     });
-                });
-                
+                });        
     }
     
     function alert(msg) {

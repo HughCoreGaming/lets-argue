@@ -1,5 +1,5 @@
 
- <h1 id="bottom">Welcome to Lets Argue!</h1>
+ <h1>Welcome to Lets Argue!</h1>
 
 <div class="row marketing">
   <h4>Lets fight it out</h4>
@@ -20,8 +20,8 @@
 
           <span>{{ arg.agreeVotes }}</span> Agree <span>{{ arg.disagreeVotes }}</span> Disagree
 
-          <button class="btn btn-info btn-lg pull-right" ng-model="collapsed" ng-click="updateChartScope(arg.agreeVotes,arg.disagreeVotes);collapsed=!collapsed">Toggle Stats</button>
-          <div ng-show="collapsed">
+          <button class="btn btn-info btn-lg pull-right" ng-model="collapsed" ng-click="resizeChart();collapsed=!collapsed">Toggle Stats</button>
+          <div ng-hide="collapsed">
 
               <p class='marketing'>Please rotate device or resize browser to animate chart</P>
               <p class='marketing'>Close toggle for after finish</P>

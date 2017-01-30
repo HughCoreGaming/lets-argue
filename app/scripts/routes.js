@@ -111,6 +111,9 @@ angular.module('letsArgueApp')
           }]
         }
       })
+      .when('/privacypolicy', {
+        templateUrl: 'views/privacypolicy.html'
+      })
       .when('/myargs', {
         templateUrl: 'views/myargs.html',
         controller: 'Myargs',

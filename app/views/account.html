@@ -13,12 +13,7 @@
       <label> Name </label>
       <input type="text" class="form-control" ng-model="user.name" name="userName">
     </p>
-    <img ng-src="{{ user.photo }}" width="100" height="100">
-    <p class="form-group">
-      <label> Image profile URL </label>
-      <input type="text" class="form-control" ng-model="user.photo" name="photoUrl">
-    </p>
-    <input type="submit" class="btn btn-primary" value="Update name/photo" ng-click=" updateProfile(user.name, user.photo)">
+    <input type="submit" class="btn btn-primary" value="Update name" ng-click=" updateProfile(user.name)">
     <br><br>
 
   </form>

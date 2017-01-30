@@ -17,7 +17,6 @@ angular.module('letsArgueApp')
   $scope.user = {
     uid: currentAuth.uid,
     name: currentAuth.displayName,
-    photo: currentAuth.photoURL,
     email: currentAuth.email
   };
 
@@ -86,14 +85,13 @@ angular.module('letsArgueApp')
       }, 10000);
     }
 
-  $scope.updateProfile = function(name, imgUrl) {
+  $scope.updateProfile = function(name) {
       
       $scope.err = null;
       $scope.msg = null;
       
     firebase.auth().currentUser.updateProfile({
-      displayName: name,
-      photoURL: imgUrl
+      displayName: name
     })
       .then(function () {
         showSuccess("updated");

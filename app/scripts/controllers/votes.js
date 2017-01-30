@@ -12,7 +12,7 @@ angular.module('letsArgueApp')
     $scope.userHasVoted = false;
 
      // synchronize a read-only, synchronized array of args, limit to most recent 10
-    var query = rootRef.child('args').limitToLast(10);
+    var query = rootRef.child('args');
     var args = $firebaseArray(query);
 
     args.$loaded()

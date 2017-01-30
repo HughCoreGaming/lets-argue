@@ -41,9 +41,9 @@ angular.module('letsArgueApp')
         }
     };
     
-    $scope.argueShow = 5;
+    $scope.argueShow = 1;
 
-    var argsRef = firebase.database().ref("args").limitToFirst($scope.argueShow);
+    var argsRef = firebase.database().ref("args").orderByChild("agreeVotes").limitToLast($scope.argueShow);
     var votesRef = firebase.database().ref("votes");
 
     var args = $firebaseArray(argsRef);
@@ -79,7 +79,7 @@ angular.module('letsArgueApp')
                 argueShow--;
             }
 
-            argsRef = firebase.database().ref("args").orderByKey().limitToFirst(argueShow);
+            argsRef = firebase.database().ref("args").orderByChild("agreeVotes").limitToLast(argueShow);
             args = $firebaseArray(argsRef);
             args.$loaded()
                     .then(function () {
